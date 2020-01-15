@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ module_name }}</title>
+</head>
+<body>
+    <form id="module_form">
+        <div><input type="text" name="try"></input></div>
+        {{ module_parameters | safe }}
+        <input type="button" value="hmm" id="generate_button"></input> <!-- might put out of form so it won't get in the way -->
+    </form>
+</body>
+<script type="text/javascript" src="{{ url_for('static', filename='form_handler.js') }}"></script>
+</html>
