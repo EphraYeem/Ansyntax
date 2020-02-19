@@ -4,4 +4,8 @@ gen_btn.addEventListener("click", function() {
     for (var i = 0, element; element = elements[i++];) {
         //checks and whatnot
     }
+    var elms = document.getElementsByClassName("form_attribute")
+    for (var j = 0, elm; elm = elms[j++];) {
+        alert(elm.innerText)
+    }
 });

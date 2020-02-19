@@ -17,21 +17,36 @@ def home():
     return render_template('Ansi.html', list_of_modules=list_of_modules)
 
 
+def format_parameter(parameter):
+    if 'Options' in parameter:
+        select_list = '<div>{}<select name={} form="module_form">'.format(parameter['Name'], parameter['Name'])
+        for op in parameter['Options']:
+            select_list += '<option value={}>{}</option>'.format(op, op)
+        select_list += '</select></div>'
+        return select_list
+    else:
+        #select_list = '<div>{}<input type="search" name={}></input></div>'.format(parameter['Name'], parameter['Name'])
+        #select_list = '<div>{}<textarea form ="module_form" name={}></textarea></div>'.format(parameter['Name'], parameter['Name'])
+        #'<div>{}<div name={} class="form_attribute" contentEditable="true"></div></div>'.format(parameter['Name'], parameter['Name']) + \
+        #'<textarea name={} style="display:none"></textarea>'.format(parameter['Name'])
+        return '<div>{}<div name={} class="form_attribute" contentEditable="true"></div></div>'.format(parameter['Name'], parameter['Name'])
+
 @app.route("/modules/<module>")
 def produce_module_page(module):
-    print(module)
     module_object = db.modules.find_one({"_id": ObjectId(module)})
-    module_parameters = '<li>Synopsis - {}</li>'.format(module_object['Synopsis'])
+    module_parameters = ''
     for param in module_object['Parameters']:
-        module_parameters += '<li>param - {}</li>'.format(param)
+        module_parameters += format_parameter(param)
     return render_template('module_form.html',
                            module_parameters=module_parameters,
-                           module_name=module_object['Name'])
-# {Name:"", Synopsis:"", Parameters:{Name:"", Comment:"", Data_type:"", Required:true\false, Options:{}, Default_option:""}}
+                           module_name=module_object['Name'],
+                           synopsis=module_object['Synopsis'])
+# {Name:"", Synopsis:"", Parameters:{Name:"", Comments:"", Data_type:"", Required:true\false, Options:{}, Default_option:""}}
 
 
 @app.route("/desperate_times_call_for_desperate_housewives", methods=['POST'])
 def generate_YAML_code():
+    print("yee")
     request.json
     return "---"
 

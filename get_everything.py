@@ -52,5 +52,5 @@ i=0
 for m in modules:
     db.modules.insert_one(process_module(m.text, m['href']))
     i += 1
-    if i > 1:
+    if i > 4:
         break

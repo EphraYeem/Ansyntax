@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='module_form.css') }}">
     <title>{{ module_name }}</title>
 </head>
 <body>
+    <h1>{{ module_name }} </h1>
+    <h2>Synopsis</h2>
+    <h4>{{ synopsis | safe }}</h4>
     <form id="module_form">
-        <div><input type="text" name="try"></input></div>
         {{ module_parameters | safe }}
         <input type="button" value="hmm" id="generate_button"></input> <!-- might put out of form so it won't get in the way -->
     </form>
