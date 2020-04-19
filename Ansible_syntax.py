@@ -1,10 +1,17 @@
 #!/bin/python3
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, json
 app = Flask(__name__)
 db = MongoClient().test
 
+SORTABLE_OBJECT_HEADER = '<div class="list-group-item"><span class="glyphicon glyphicon-resize-vertical" aria-hidden="true"></span>'
+SORTABLE_OBJECT_FOOTER = '</div>'
+
+SELECT_PARENT_HTML     = SORTABLE_OBJECT_HEADER + '{} <select id={} name="actual_form_attribute">'
+SELECT_FOOTER_HTML     = '</select>' + SORTABLE_OBJECT_FOOTER
+SELECT_OPTION_HTML     = '<option value={}>{}</option>'
+DIV_TEXTBOX_HTML       = SORTABLE_OBJECT_HEADER + '{}<div id={} name="actual_form_attribute" contentEditable="true"></div>' + SORTABLE_OBJECT_FOOTER
 
 @app.route("/")
 @app.route("/home")
@@ -19,17 +26,13 @@ def home():
 
 def format_parameter(parameter):
     if 'Options' in parameter:
-        select_list = '<div>{}<select name={} form="module_form">'.format(parameter['Name'], parameter['Name'])
+        select_list = SELECT_PARENT_HTML.format(parameter['Name'], parameter['Name'])
         for op in parameter['Options']:
-            select_list += '<option value={}>{}</option>'.format(op, op)
-        select_list += '</select></div>'
+            select_list += SELECT_OPTION_HTML.format(op, op)
+        select_list += SELECT_FOOTER_HTML
         return select_list
     else:
-        #select_list = '<div>{}<input type="search" name={}></input></div>'.format(parameter['Name'], parameter['Name'])
-        #select_list = '<div>{}<textarea form ="module_form" name={}></textarea></div>'.format(parameter['Name'], parameter['Name'])
-        #'<div>{}<div name={} class="form_attribute" contentEditable="true"></div></div>'.format(parameter['Name'], parameter['Name']) + \
-        #'<textarea name={} style="display:none"></textarea>'.format(parameter['Name'])
-        return '<div>{}<div name={} class="form_attribute" contentEditable="true"></div></div>'.format(parameter['Name'], parameter['Name'])
+        return DIV_TEXTBOX_HTML.format(parameter['Name'], parameter['Name'])
 
 @app.route("/modules/<module>")
 def produce_module_page(module):
@@ -46,9 +49,12 @@ def produce_module_page(module):
 
 @app.route("/desperate_times_call_for_desperate_housewives", methods=['POST'])
 def generate_YAML_code():
-    print("yee")
-    request.json
-    return "---"
+    attribute_dict = request.get_json()
+    module_id = attribute_dict.pop('site_url').split('/')[-1]
+    print(module_id)
+    for attribute, value in attribute_dict.items():
+        print(attribute, value)
+    return json.jsonify({'try': 'y33'})
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=80)

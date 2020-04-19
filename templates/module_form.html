@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='module_form.css') }}">
     <title>{{ module_name }}</title>
 </head>
@@ -9,10 +10,12 @@
     <h1>{{ module_name }} </h1>
     <h2>Synopsis</h2>
     <h4>{{ synopsis | safe }}</h4>
-    <form id="module_form">
+    <div id="module_form" class="list-group">
         {{ module_parameters | safe }}
-        <input type="button" value="hmm" id="generate_button"></input> <!-- might put out of form so it won't get in the way -->
-    </form>
+    </div>
+    <input type="button" value="hmm" id="generate_button"></input>
 </body>
+<script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='form_handler.js') }}"></script>
 </html>

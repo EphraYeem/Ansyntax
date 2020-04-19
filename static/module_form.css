@@ -1,4 +1,13 @@
 div.form_attribute {
-   width: 30%;
-   height: 20%;
- }
+  width: 30%;
+  height: 20%;
+}
+
+body {
+  margin: 10px;
+}
+
+.glyphicon-resize-vertical {
+  cursor: move;
+  cursor: -webkit-grabbing;
+}
