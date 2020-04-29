@@ -1,5 +1,5 @@
 Sortable.create(module_form, {
-  handle: '.glyphicon-resize-vertical',
+  handle: '.fa-sort',
   animation: 150
 });
 

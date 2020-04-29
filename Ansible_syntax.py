@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, json
 app = Flask(__name__)
 db = MongoClient().test
 
-SORTABLE_OBJECT_HEADER = '<div class="list-group-item"><span class="glyphicon glyphicon-resize-vertical" aria-hidden="true"></span>'
+SORTABLE_OBJECT_HEADER = '<div class="list-group-item"><span class="fas fa-sort"></span>'
 SORTABLE_OBJECT_FOOTER = '</div>'
 
 SELECT_PARENT_HTML     = SORTABLE_OBJECT_HEADER + '{} <select id={} name="actual_form_attribute">'
